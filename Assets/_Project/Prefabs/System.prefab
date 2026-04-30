@@ -313,10 +313,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 835b176a7b8a68b409db3d6ad3f4a403, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  timerMaxAmount: 0
-  timerCurrentAmount: 0
-  knowledge: 0
-  troopDamage: 0
+  timerMaxAmount: 30
+  timerCurrentAmount: 30
+  knowledge: 50
+  troopDamage: 10
   shouldEndGame: 0
   currentState: 0
 --- !u!114 &5020358969178377105
