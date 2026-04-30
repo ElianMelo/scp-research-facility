@@ -278,6 +278,7 @@ GameObject:
   - component: {fileID: 5020358969178377105}
   - component: {fileID: 905634632603148336}
   - component: {fileID: 6052480712870892655}
+  - component: {fileID: 5437780385676582894}
   m_Layer: 0
   m_Name: System
   m_TagString: Untagged
@@ -315,7 +316,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   timerMaxAmount: 30
   timerCurrentAmount: 30
-  knowledge: 50
+  knowledge: 0
   troopDamage: 10
   shouldEndGame: 0
   currentState: 0
@@ -358,6 +359,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1a402c8bc23983468a670de3fcef851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UpgradeManager
+--- !u!114 &5437780385676582894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5161269162870673510}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f0e1d6ede58fa84999c602409a4904c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CommandsManager
 --- !u!1 &5977280815111332562
 GameObject:
   m_ObjectHideFlags: 0
