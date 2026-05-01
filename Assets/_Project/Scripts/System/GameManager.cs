@@ -13,7 +13,6 @@ public class GameManager : MonoBehaviour
     public float timerMaxAmount;
     public float timerCurrentAmount;
     public int knowledge;
-    public int troopDamage;
 
     public bool shouldEndGame = false;
 
@@ -49,7 +48,7 @@ public class GameManager : MonoBehaviour
     public void AddKnowledge(int amount)
     {
         knowledge += amount;
-        //InterfaceManager.Instance.UpdateKaijuKnowledge(kaijuuKnowledge);
+        InterfaceManager.Instance.UpdateKnowledge(knowledge);
     }
 
     public bool AttemptRemoveKnowledge(int amount)
@@ -60,25 +59,7 @@ public class GameManager : MonoBehaviour
             return false;
         }
         knowledge -= amount;
-        //InterfaceManager.Instance.UpdateKaijuKnowledge(kaijuuKnowledge);
-        return true;
-    }
-
-    public void AddTroopDamage(int amount)
-    {
-        troopDamage += amount;
-        //InterfaceManager.Instance.UpdateTroopDamage(troopDamage);
-    }
-
-    public bool AttemptRemoveTroopDamage(int amount)
-    {
-        if (amount > troopDamage)
-        {
-            //SoundManager.Instance.UINoFounds();
-            return false;
-        }
-        troopDamage -= amount;
-        //InterfaceManager.Instance.UpdateTroopDamage(troopDamage);
+        InterfaceManager.Instance.UpdateKnowledge(knowledge);
         return true;
     }
 

@@ -5,16 +5,16 @@ public class CommandsManager : MonoBehaviour
 {
     void Start()
     {
-        DebugLogConsole.AddCommand<int>("coin-add", "Add Coin", CoinAdd);
-        DebugLogConsole.AddCommand<int>("coin-remove", "Remove Coin", CoinRemove);
+        DebugLogConsole.AddCommand<int>("add-coin", "Add Coin", AddCoin);
+        DebugLogConsole.AddCommand<int>("remove-coin", "Remove Coin", RemoveCoin);
     }
 
-    private void CoinAdd(int amount)
+    private void AddCoin(int amount)
     {
         GameManager.Instance.AddKnowledge(amount);
     }
 
-    private void CoinRemove(int amount)
+    private void RemoveCoin(int amount)
     {
         GameManager.Instance.AttemptRemoveKnowledge(amount);
     }
