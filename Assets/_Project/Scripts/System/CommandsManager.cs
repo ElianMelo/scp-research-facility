@@ -11,11 +11,11 @@ public class CommandsManager : MonoBehaviour
 
     private void AddCoin(int amount)
     {
-        GameManager.Instance.AddKnowledge(amount);
+        GlobalValuesManager.Instance.AddKnowledge(amount);
     }
 
     private void RemoveCoin(int amount)
     {
-        GameManager.Instance.AttemptRemoveKnowledge(amount);
+        GlobalValuesManager.Instance.AttemptRemoveKnowledge(amount);
     }
 }

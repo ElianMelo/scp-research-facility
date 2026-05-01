@@ -64,7 +64,7 @@ public class UpgradeItem : MonoBehaviour, IPointerEnterHandler, IPointerExitHand
     private void AttempBuyUpgrade()
     {
         if (isUnlocked) return;
-        bool brought = GameManager.Instance.AttemptRemoveKnowledge(cost);
+        bool brought = GlobalValuesManager.Instance.AttemptRemoveKnowledge(cost);
         if (!brought) return;
         //SoundManager.Instance.UIBuy();
         currentPhase += 1;

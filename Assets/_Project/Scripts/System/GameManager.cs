@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public enum GameState
@@ -10,16 +11,9 @@ public enum GameState
 
 public class GameManager : MonoBehaviour
 {
-    public float timerMaxAmount;
-    public float timerCurrentAmount;
-    public int knowledge;
-
-    public bool shouldEndGame = false;
-
-    public GameState currentState;
-
     public static GameManager Instance;
 
+    public GameState currentState;
     public static Action<GameState> OnGameStateChanged;
     public GameState CurrentState => currentState;
 
@@ -30,60 +24,23 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        currentState = GameState.Pause;
-        timerCurrentAmount = timerMaxAmount;
+        ChangeGameState(GameState.Pause);
     }
 
-    void Update()
+    public void TriggerResearchPhase()
     {
-        UpdateGameTimer();
-        // InterfaceManager.Instance.UpdateTimer(timerCurrentAmount);
-    }
-
-    public void FlagToEndGame()
-    {
-        shouldEndGame = true;
-    }
-
-    public void AddKnowledge(int amount)
-    {
-        knowledge += amount;
-        InterfaceManager.Instance.UpdateKnowledge(knowledge);
-    }
-
-    public bool AttemptRemoveKnowledge(int amount)
-    {
-        if (amount > knowledge)
+        ChangeGameState(GameState.Research);
+        StartCoroutine(ResearchPhaseCoroutine());
+        IEnumerator ResearchPhaseCoroutine()
         {
-            //SoundManager.Instance.UINoFounds();
-            return false;
-        }
-        knowledge -= amount;
-        InterfaceManager.Instance.UpdateKnowledge(knowledge);
-        return true;
-    }
-
-    private void UpdateGameTimer()
-    {
-        if (CurrentState != GameState.Research) return;
-        timerCurrentAmount -= Time.deltaTime;
-        if (timerCurrentAmount <= 0)
-        {
-            timerCurrentAmount = 0;
-            if (shouldEndGame)
+            while(GlobalValuesManager.Instance.Battery > 0)
             {
-                ChangeGameState(GameState.Upgrade);
-                //InterfaceManager.Instance.ShowEndGameScreen();
-                return;
+                yield return new WaitForSeconds(1f);
+                GlobalValuesManager.Instance.RemoveBattery(1);
             }
+            GlobalValuesManager.Instance.ResetBattery();
             ChangeGameState(GameState.Upgrade);
         }
-    }
-
-    public void EndUpgradePhase()
-    {
-        timerCurrentAmount = timerMaxAmount;
-        ChangeGameState(GameState.Research);
     }
 
     public void ChangeGameState(GameState newState)
