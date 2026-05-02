@@ -36,10 +36,8 @@ public class MouseInteraction : MonoBehaviour
 
         if(hit && _hitInfo.collider != null)
         {
-            ButtonController buttonController = _hitInfo.collider.GetComponent<ButtonController>();
-            if (buttonController != null) buttonController.Click();
+            IClickable buttonController = _hitInfo.collider.GetComponent<IClickable>();
+            if (buttonController != null) buttonController.OnClick();
         }
-        
-        Debug.Log("Click");
     }
 }
