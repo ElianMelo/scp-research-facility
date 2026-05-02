@@ -1,10 +1,15 @@
 using DG.Tweening;
+using System;
 using System.Collections;
 using UnityEngine;
 
 public class ButtonController : MonoBehaviour, IClickable
 {
+    [SerializeField] private float initialScale = 1f;
+    [SerializeField] private float targetScale = 1.5f;
     private bool canClick = true;
+
+    public Action OnClickPerformed;
 
     private void OnDisable()
     {
@@ -22,12 +27,11 @@ public class ButtonController : MonoBehaviour, IClickable
 
     private IEnumerator ClickRoutine()
     {
-        var scale = 1.5f;
-        var targetScale = new Vector3(scale, scale, scale);
-        transform.DOScale(targetScale, 0.2f);
-        GlobalValuesManager.Instance.AddKnowledge(10);
+        var targetScaleVector = new Vector3(targetScale, targetScale, targetScale);
+        transform.DOScale(targetScaleVector, 0.2f);
+        OnClickPerformed?.Invoke();
         yield return new WaitForSeconds(0.2f);
-        transform.DOScale(Vector3.one, 0.2f);
+        transform.DOScale(new Vector3(initialScale, initialScale, initialScale), 0.2f);
         canClick = true;
     }
 }
