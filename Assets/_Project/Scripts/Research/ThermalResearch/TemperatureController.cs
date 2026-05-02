@@ -1,3 +1,4 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -13,9 +14,14 @@ public class TemperatureController : MonoBehaviour
     [SerializeField] Image indicatorImage;
     [SerializeField] Gradient lightGradient;
 
-    private float minTemperature = -40;
-    private float maxTemperature = 80;
-    private float currentTemperature = 20;
+    float minTemperature = -40f;
+    float maxTemperature = 80f;
+    float currentTemperature = 20f;
+    float targetTemperature = 20f;
+    float targetSwitchRate = 0.003f;
+    float clickAmount = 10f;
+
+    Coroutine moveToTargetTemperatureRoutine;
 
     void Start()
     {
@@ -29,15 +35,31 @@ public class TemperatureController : MonoBehaviour
     }
 
     private void OnColdClickPerformed() {
-        if (currentTemperature - 10f < minTemperature) return;
-        currentTemperature -= 10f;
-        UpdateVisuals();
+        if (currentTemperature - clickAmount < minTemperature) targetTemperature = minTemperature;
+        targetTemperature = currentTemperature - clickAmount;
+        HandleTargetCoroutine();
     }
 
     private void OnHotClickPerformed() {
-        if (currentTemperature + 10f > maxTemperature) return;
-        currentTemperature += 10f;
-        UpdateVisuals();
+        if (currentTemperature + clickAmount > maxTemperature) targetTemperature = maxTemperature;
+        targetTemperature = currentTemperature + clickAmount;
+        HandleTargetCoroutine();
+    }
+
+    private void HandleTargetCoroutine()
+    {
+        if (moveToTargetTemperatureRoutine != null) StopCoroutine(moveToTargetTemperatureRoutine);
+        moveToTargetTemperatureRoutine = StartCoroutine(MoveToTargetTemperature());
+    }
+
+    private IEnumerator MoveToTargetTemperature()
+    {
+        while (currentTemperature != targetTemperature)
+        {
+            currentTemperature = Mathf.Lerp(currentTemperature, targetTemperature, targetSwitchRate);
+            UpdateVisuals();
+            yield return null;
+        }
     }
 
     private Color CalculateCurrentLightBasedOnGradient(float percentage)
